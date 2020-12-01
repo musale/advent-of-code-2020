@@ -12,6 +12,8 @@ func main() {
 	numbers := loadNumbers()
 	first, second, product := partOne(numbers)
 	fmt.Println(first, second, product)
+	first, second, third, product := partTwo(numbers)
+	fmt.Println(first, second, third, product)
 }
 
 func partOne(arr []int) (int, int, int) {
@@ -22,6 +24,18 @@ func partOne(arr []int) (int, int, int) {
 		}
 	}
 	return 0, 0, 0
+}
+
+func partTwo(arr []int) (int, int, int, int) {
+	for _, firstValue := range arr {
+		for _, secondValue := range arr[1:] {
+			target := 2020 - firstValue - secondValue
+			if checkExistsInArray(arr[2:], target) {
+				return firstValue, secondValue, target, firstValue * secondValue * target
+			}
+		}
+	}
+	return 0, 0, 0, 0
 }
 
 func checkExistsInArray(arr []int, item int) bool {
