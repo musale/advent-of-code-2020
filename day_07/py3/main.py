@@ -15,21 +15,23 @@ for bag in checked:
         if bag_name[:-1] in line and line not in checked:
             checked.append(line)
 print(len(checked))
-# for line in lines:
-#     if matches := re.findall(bag_rx, line):
-#         for match in matches:
-#             fixed = match if match.endswith("s") else match + "s"
-#             print(fixed)
-#             if fixed == "shiny gold bags":
-#                 total += 1
-#                 break
-#             found = False
-#             for l in lines:
-#                 if l.startswith(fixed):
-#                     if re.search(r"\d+ shiny gold bag", l):
-#                         found = True
-#                         total += 1
-#                         break
-#             if found:
-#                 break
-# print(total)
+
+
+# WIP: part 2
+gold_bag = None
+for line in lines:
+    if line.startswith("shiny gold bags"):
+        gold_bag = line
+        break
+
+bag_rx = r"(\d+)\s(\w+\s\w+\sbag(?:s)?)(?:,|.)"
+matches = re.findall(bag_rx, gold_bag)
+found = set(matches)
+# while (matches):
+for match in matches:
+    for line in lines:
+        if line.startswith(match[1]):
+            new_match = re.findall(bag_rx, line)
+            for n in new_match:
+                found.add(n)
+print(found)
